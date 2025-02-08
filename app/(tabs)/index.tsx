@@ -1,11 +1,18 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-
+import { Image, View, StyleSheet, Platform, TouchableOpacity } from 'react-native';
+import React, {useState} from 'react';
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
 export default function HomeScreen() {
+
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const handleToggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#ffff', dark: '#1D3D47' }}
@@ -21,35 +28,28 @@ export default function HomeScreen() {
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle" style={styles.headerStyles}>What is ecohunt?</ThemedText>
+        <ThemedText type="defaultSemiBold" style={styles.semitransparenttext}>
+              A scavenger hunt for recycling! Track your progress and environmental impacts! Build a green community and scavenge rather than throwing things away!
+        </ThemedText>
+        
         <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">A scavenger hunt for recycling! Track your progress and environmental impacts! Build a green community and scavenge rather than throwing things aways!</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
+          <TouchableOpacity onPress = {handleToggleExpand}>
+            <ThemedText type="defaultSemiBold">
+            {isExpanded ? 'Hide\n' : 'How to play?\n'}  
+            </ThemedText>
+          </TouchableOpacity>
+          {isExpanded && (
+          
+          <View style={styles.expandedTextContainer}>
+          <ThemedText type="defaultSemiBold" style={styles.semitransparenttext}>
+            A scavenger hunt for recycling! Track your progress and environmental impacts! Build a green community and scavenge rather than throwing things away!
+          </ThemedText>
+          </View>
+        )}
+          
         </ThemedText>
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
+      
     </ParallaxScrollView>
   );
 }
@@ -84,5 +84,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: "#1D3D47",
   },
-
+  expandedTextContainer: {
+    marginVertical: 8,
+    padding: 20,
+    backgroundColor: '#ffed87',
+    borderRadius: 8,
+  },
+  semitransparenttext: {
+    color: '#332f1c',
+  }
 });
