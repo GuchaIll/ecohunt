@@ -1,18 +1,12 @@
-import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
-//import { REACT_APP_GOOGLE_API_KEY } from '@env';
-import {Text, View, StyleSheet} from 'react-native';
-import { useMemo, useState, useEffect } from "react";
-import * as Location from "expo-location";
-import "./Map.css";
+import React, { useMemo, useState, useEffect } from 'react';
+import { Text, View, StyleSheet } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
+import * as Location from 'expo-location';
 
 const Map = () => {
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyCG--r9Tici0asEOUAFk9d8noXxRm0RdKE",
-  });
- 
-  const [currentPosition, setCurrentPosition] = useState({ lat: 0, lng: 0 });
+  const [currentPosition, setCurrentPosition] = useState({ latitude: 0, longitude: 0 });
   const [loaded, setIsLoaded] = useState(false);
-  
+
   useEffect(() => {
     const getLocation = async () => {
       try {
@@ -24,31 +18,47 @@ const Map = () => {
 
         let location = await Location.getCurrentPositionAsync({});
         const { latitude, longitude } = location.coords;
-        setCurrentPosition({ lat: latitude, lng: longitude });
+        setCurrentPosition({ latitude, longitude });
         setIsLoaded(true);
       } catch (error) {
-        console.error("Error getting current position:", error);
+        console.error('Error getting current position:', error);
       }
     };
 
     getLocation();
   }, []);
 
-  const center = useMemo(() => currentPosition, [currentPosition]);
+  const region = useMemo(() => ({
+    ...currentPosition,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  }), [currentPosition]);
 
   return (
-    <View className="App">v
-      {!isLoaded ? (
+    <View style={styles.container}>
+      {!loaded ? (
         <Text>Loading...</Text>
       ) : (
-        <GoogleMap
-          mapContainerClassName="map-container"
-          center={center}
-          zoom={15}
-        />
+        <MapView
+          style={styles.map}
+          region={region}
+          showsUserLocation
+          followsUserLocation
+        >
+          <Marker coordinate={currentPosition} />
+        </MapView>
       )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject,
+  },
+});
 
 export default Map;

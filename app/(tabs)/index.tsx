@@ -8,21 +8,21 @@ import { ThemedView } from '@/components/ThemedView';
 export default function HomeScreen() {
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
+      headerBackgroundColor={{ light: '#ffff', dark: '#1D3D47' }}
       headerImage={
         <Image
-          source={require('@/assets/images/partial-react-logo.png')}
+          source={require('@/assets/images/recycle.jpg')}
           style={styles.reactLogo}
         />
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
+        <ThemedText type="title" style={styles.titleStyle} >Ecohunt</ThemedText>
         <HelloWave />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
+        <ThemedText type="subtitle" style={styles.headerStyles}>What is ecohunt?</ThemedText>
         <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
+          Edit <ThemedText type="defaultSemiBold">A scavenger hunt for recycling! Track your progress and environmental impacts! Build a green community and scavenge rather than throwing things aways!</ThemedText> to see changes.
           Press{' '}
           <ThemedText type="defaultSemiBold">
             {Platform.select({
@@ -56,6 +56,7 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   titleContainer: {
+    textAlign: 'center',
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
@@ -65,10 +66,23 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   reactLogo: {
-    height: 178,
-    width: 290,
+    height: 200,
+    width: 400,
     bottom: 0,
     left: 0,
     position: 'absolute',
   },
+  titleStyle: {
+    textAlign: 'center',
+    alignSelf: 'center',
+    fontSize: 36,
+    fontWeight: 'bold',
+    color: "#1D3D47",
+  },
+  headerStyles: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: "#1D3D47",
+  },
+
 });
