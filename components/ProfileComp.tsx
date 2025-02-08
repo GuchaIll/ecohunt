@@ -1,22 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, Dimensions, ScrollView, ImageBackground, TouchableOpacity, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
-import { onAuthStateChanged, User } from 'firebase/auth';
-import { auth } from '../../config/firebaseConfig';
 
 const { width, height } = Dimensions.get('window');
 
 const lightBackground = require('@/assets/images/doodleBackground.jpg');
 
-export default function Profile() {
+export default function ProfileComp() {
   const [showAdditionalSection, setShowAdditionalSection] = useState(false);
-
-    
-    
-    const [user, setUser] = useState<User | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [hasAuth, setAuth] = useState(false);
-    const [email, setEmail] = useState('');
-    const [name, setName] = useState('');
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const scrollY = event.nativeEvent.contentOffset.y;
@@ -27,39 +17,7 @@ export default function Profile() {
     }
   };
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      setLoading(false);
-      setAuth(true);
-      console.log('User object:', user);
-      if(user)
-      {
-        console.log('User object:', user);
-        alert(`User signed in: ${user.email}`);
-        setName(user.displayName || '');
-        setEmail(user.email || '');
-      }
-      else {
-        setName('Charlie');
-        setEmail('guchaillustrate@gmail.com');
-      }
-
-   });
-
-   return () => unsubscribe();
-  }, []);
-
-  if (loading) {
-    return (
-      <View style={styles.container}>
-        <Text>Loading...</Text>
-      </View>
-    );
-  }
-
   return (
-    
     <ImageBackground source = {lightBackground} style = {styles.container}>
     <ScrollView 
       style={styles.container} 
@@ -78,9 +36,8 @@ export default function Profile() {
           />
         </View>
         <View style={styles.profileDetails}>
-          <Text style={styles.nameText}>{name}</Text>
-          <Text style={styles.startDateText}>{email}</Text>
-          <Text style={styles.startDateText}>Started: January 1, 2023</Text>
+          <Text style={styles.nameText}>Gingko</Text>
+          <Text style={styles.startDateText}>Start Date: January 1, 2023</Text>
           <Text style={styles.streakText}>3 days streak!</Text>
         </View>
       </View>
