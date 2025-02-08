@@ -42,7 +42,9 @@ export default function HomeScreen() {
           
           <View style={styles.expandedTextContainer}>
           <ThemedText type="defaultSemiBold" style={styles.semitransparenttext}>
-            A scavenger hunt for recycling! Track your progress and environmental impacts! Build a green community and scavenge rather than throwing things away!
+           Find scavenge items in your area
+           Take a picture of your recycled item
+           Earn tokens to build your garden
           </ThemedText>
           </View>
         )}
