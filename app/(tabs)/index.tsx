@@ -24,7 +24,7 @@ export default function HomeScreen() {
       }>
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title" style={styles.titleStyle} >Ecohunt</ThemedText>
-        <HelloWave />
+        
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle" style={styles.headerStyles}>What is ecohunt?</ThemedText>
@@ -34,7 +34,7 @@ export default function HomeScreen() {
         
         <ThemedText>
           <TouchableOpacity onPress = {handleToggleExpand}>
-            <ThemedText type="defaultSemiBold">
+            <ThemedText type="defaultSemiBold" style={{backgroundColor: '#bbbb98', borderRadius: 8, padding: 8,  textAlign: 'center'}} >
             {isExpanded ? 'Hide\n' : 'How to play?\n'}  
             </ThemedText>
           </TouchableOpacity>

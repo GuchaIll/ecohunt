@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { StyleSheet, View } from 'react-native';
 import { WebView } from 'react-native-webview';
 
 
 export default function Explore() {
+ 
   return (
     <View style={styles.container}>
       <WebView 

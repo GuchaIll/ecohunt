@@ -1,8 +1,9 @@
-import { Text, View, StyleSheet, ImageBackground} from 'react-native';
+import { Text, View, StyleSheet, ImageBackground, ScrollView} from 'react-native';
 import ImageViewer from '@/components/ImageView';
 import Button from '@/components/Button';
 import * as ImagePicker from 'expo-image-picker';
 import { useState, useEffect } from 'react';
+import InformationPanel from '@/components/InformationPanel';
 
 const PlaceholderImage = require('@/assets/images/bottles.jpg');
 const BackgroundImage = require('@/assets/images/lightGreenBackground.jpg');
@@ -26,6 +27,12 @@ export default function Index() {
             }
         })();
      }, []);
+
+     const resetPhoto = () => {
+        setSelectedImage(undefined);
+        setShowAppOptions(false);
+        
+     }
 
      const pickImageAsync = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -85,6 +92,7 @@ export default function Index() {
            setPredictions(json);
            console.log(json);
            console.log(predictions);
+           
         } catch (error) {
           console.error(error);
         }
@@ -99,7 +107,10 @@ export default function Index() {
           const [x, y, boxWidth, boxHeight] = bbox;
           console.log('scaleX:', scaleX, 'scaleY:', scaleY);
           console.log('className:', className, 'confidence:', confidence);
-        console.log('x:', x, 'y:', y, 'boxWidth:', boxWidth, 'boxHeight:', boxHeight);
+        
+          const top = Math.max(50,  50 + (y + (boxHeight/ 2)) * scaleY);
+          const height = Math.min(490 - top, boxHeight * scaleY + 50);
+          console.log('x:', x, 'y:', y, 'boxWidth:', boxWidth, 'boxHeight:', boxHeight);
           return (
             <View
               key={index}
@@ -107,9 +118,9 @@ export default function Index() {
                 styles.boundingBox,
                 {
                   left: (x - (boxWidth /2)) * scaleX ,
-                  top:  (y + (boxHeight/ 2)) * scaleY,
+                  top:  top,
                   width: boxWidth * scaleX,
-                  height: boxHeight * scaleY,
+                  height: height,
                   zIndex: 1000,
                   
                 },
@@ -129,11 +140,37 @@ export default function Index() {
             <View style = {styles.imageContainer}>
             <ImageViewer imgSource={PlaceholderImage} selectedImage={selectedImage } />
             {selectedImage && renderBoundingBoxes()}
+           
+            <ScrollView style={{ flex: 2, marginTop: 10, marginBottom: 10 }}>
+          {selectedImage ? (
+            <View style={styles.predictionsContainer}>
+              <Text>Detected objects:</Text>
+              {predictions.map((prediction, index) => (
+                <View key={index}>
+                  <Text>
+                    {prediction.class} ({(prediction.confidence * 100).toFixed(2)}%)
+                  </Text>
+                  
+                </View>
+                
+              ))}
+              <InformationPanel itemClass={'glass'} />
+            </View>
+          ) : (
+            <View>
+              <Text>No image selected</Text>
+            </View>
+          )}
+        </ScrollView>
 
             </View>
             {
                 showAppOptions ? (
-                    <View /> 
+                    
+                    <View style = {styles.footerContainer}>
+                        <Button label = "Return" onPress = {resetPhoto}></Button>
+                    </View>
+                    
                 ) : (
                     <View style = {styles.footerContainer}>
                 <Button theme= "primary" label = "Take a photo" onPress={takePhotoAsync}/>
@@ -162,6 +199,7 @@ const styles = StyleSheet.create({
         flex: 1 / 3,
         alignItems: 'center',
       },
+    
    boundingBox: {
     position: 'absolute',
     borderWidth: 2,
@@ -177,4 +215,26 @@ const styles = StyleSheet.create({
     top: -20,
     left: 0,
   },
+  recycledHeader: {
+    fontSize: 16,
+    color: '#ffff',
+    
+},
+    recycledItem: {
+        fontSize: 16,
+        color: '#332f1c',
+        
+    },
+    predictionsContainer: {
+        padding: 20,
+       
+        //alignItems: 'center',
+        //justifyContent: 'center',
+        backgroundColor: '#E3B57A',
+        borderRadius: 10,
+        margin: 20,
+        marginTop: 50,
+    
+       
+    },
   });

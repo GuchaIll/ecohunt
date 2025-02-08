@@ -35,6 +35,26 @@ getDocs(userColRef).then((querySnapshot) => {
 
 });
 
+getDocs(trashcanColRef).then((querySnapshot) => {
+  let trashcans = []
+  snapshot.getDocs(querySnapshot).forEach((doc) => {
+    trashcans.push({...doc.data(), id: doc.id});
+  })
+  .catch((error) => {
+    console.log("Error getting documents: ", error);
+  });
+});
+
+getDocs(hotspotColRef).then((querySnapshot) => {
+  let hotspots = []
+  snapshot.getDocs(querySnapshot).forEach((doc) => {
+    hotspots.push({...doc.data(), id: doc.id});
+  })
+  .catch((error) => {
+    console.log("Error getting documents: ", error);
+  });
+});
+
 const storage = getStorage(app);
 
 //const auth = getAuth();
@@ -79,4 +99,4 @@ onSnapshot(hotspotColRef, (snapshot) => {
 
 
 
-export { app, db, auth, storage };
+export { app, db, auth, storage, hotspotColRef, trashcanColRef, userColRef};

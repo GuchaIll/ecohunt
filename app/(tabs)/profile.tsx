@@ -80,8 +80,8 @@ export default function Profile() {
         <View style={styles.profileDetails}>
           <Text style={styles.nameText}>{name}</Text>
           <Text style={styles.startDateText}>{email}</Text>
-          <Text style={styles.startDateText}>Started: January 1, 2023</Text>
-          <Text style={styles.streakText}>3 days streak!</Text>
+          <Text style={styles.startDateText}>Started: Feburary, 7, 2025</Text>
+          <Text style={styles.streakText}>2 days streak!</Text>
         </View>
       </View>
 
@@ -89,19 +89,26 @@ export default function Profile() {
      <View style={styles.bottomSection}>
         <View style={styles.gridContainer}>
           <TouchableOpacity style={[styles.gridItem, { backgroundColor: '#A9AD7D' }]} activeOpacity={0.7}>
-            <Text style={[styles.gridText, styles.widgetHeader]}>Environmental Impact</Text>
-            <Text style={[styles.gridText, styles.widgetSubHeader]}>Tree saved</Text>
-            <Text style={[styles.gridText, styles.widgetSubHeader]}>Energy saved</Text>
-            <Text style={[styles.gridText, styles.widgetSubHeader]}>Plastic recycled</Text>
+            <Text style={[styles.gridText, styles.widgetHeader]}>Environmental Impact: </Text>
+            <Text style={[styles.gridText, styles.widgetSubHeader]}>Tree saved: 12</Text>
+            <Text style={[styles.gridText, styles.widgetSubHeader]}>Energy saved: 600 w </Text>
+            <Text style={[styles.gridText, styles.widgetSubHeader]}>Plastic recycled: 1200 g</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.gridItem, { backgroundColor: '#E3B57A' }]} activeOpacity={0.7}>
-            <Text style={styles.gridText}>Weekly Contributions</Text>
+            <Text style={[styles.gridText, styles.widgetHeader]}>Weekly Contributions</Text>
+            <Text style={[styles.gridText, styles.widgetSubHeader]}>Plastic bottle: 6</Text>
+            <Text style={[styles.gridText, styles.widgetSubHeader]}>Glass bottle: 2</Text>
+            <Text style={[styles.gridText, styles.widgetSubHeader]}>Biodegradable: 2</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.gridItem, { backgroundColor: '#D97A4A' }]} activeOpacity={0.7}>
-            <Text style={styles.gridText}>Badges</Text>
+            <Text style={[styles.gridText, styles.widgetHeader]}>Badges</Text>
+            <Text style={[styles.gridText, styles.widgetSubHeader]}>Bottle Gang</Text>
+            <Text style={[styles.gridText, styles.widgetSubHeader]}>The decomposer</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.gridItem, { backgroundColor: '#AFCDE3' }]} activeOpacity={0.7}>
-            <Text style={styles.gridText}>Monthly tracker</Text>
+            <Text style={[styles.gridText, styles.widgetHeader]}>Monthly tracker</Text>
+            <Text style={[styles.gridText, styles.widgetSubHeader]}>Glass bottle: 14</Text>
+            <Text style={[styles.gridText, styles.widgetSubHeader]}>Biodegradable: 16</Text>
           </TouchableOpacity>
         </View>
       </View>
