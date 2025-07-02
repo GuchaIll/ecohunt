@@ -13,6 +13,8 @@ export default function HomeScreen() {
     setIsExpanded(!isExpanded);
   };
 
+
+  
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#ffff', dark: '#1D3D47' }}
