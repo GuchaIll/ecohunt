@@ -10,8 +10,6 @@ const lightBackground = require('@/assets/images/doodleBackground.jpg');
 export default function Profile() {
   const [showAdditionalSection, setShowAdditionalSection] = useState(false);
 
-    
-    
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
     const [hasAuth, setAuth] = useState(false);

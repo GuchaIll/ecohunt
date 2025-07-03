@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import {  createUserWithEmailAndPassword } from 'firebase/auth';
-import { db } from '../../config/firebaseConfig'; // Adjust the import path as needed
+import { db } from '../../config/firebaseConfig';
 
 import { addDoc, collection } from 'firebase/firestore';
 import {auth} from '../../config/firebaseConfig';

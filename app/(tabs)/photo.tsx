@@ -10,8 +10,7 @@ const BackgroundImage = require('@/assets/images/lightGreenBackground.jpg');
 
 export default function Index() {
 
-     const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
-     
+     const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);     
      const [showAppOptions, setShowAppOptions] = useState<boolean>(false);
 
      const [predictions, setPredictions] = useState<any[]>([]);
