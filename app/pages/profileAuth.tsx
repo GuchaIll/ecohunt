@@ -9,16 +9,6 @@ const Main = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [hasAuth, setAuth] = useState(false);
-
-  //useEffect(() => {
-    //const unsubscribe = onAuthStateChanged(auth, (user) => {
-   //   setUser(user);
-   //   setLoading(false);
-  //    setAuth(true);
-  /// });
-
-  // return () => unsubscribe();
- // }, []);
    
 
 

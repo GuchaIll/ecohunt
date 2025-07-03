@@ -1,11 +1,14 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Modal, TextInput, Button, TouchableOpacity, Image } from 'react-native';
+import { Text, View, StyleSheet, Modal, TextInput, Button, TouchableOpacity, Image, Platform } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { Ionicons } from '@expo/vector-icons'; // Import Ionicons for the plus sign
 import { getFirestore, collection, getDocs, addDoc, doc, onSnapshot} from 'firebase/firestore';
 import { db, hotspotColRef, trashcanColRef  } from '../../config/firebaseConfig'; // Adjust the import path as needed
 import { IconSymbol } from '@/components/ui/IconSymbol';
+import { MapFallback } from '@/components/MapFallback';
+import { MapErrorBoundary } from '@/components/MapErrorBoundary';
+
 
 const hotspotMarkerImage = require('@/assets/images/recycling.png');
 const trashcanMarkerImage = require('@/assets/images/garbage.png');
@@ -17,6 +20,7 @@ const Map = () => {
   const [name, setName] = useState('');
   const [image, setImage] = useState('');
   const [description, setDescription] = useState('');
+  const [mapError, setMapError] = useState(false);
 
   const [hotspots, setHotspots] = useState<{ id: string; name: string; image: string | null; description: string | null; location: { latitude: number; longitude: number } }[]>([]);
   const [trashcans, setTrashcans] = useState<{ id: string; location: { latitude: number; longitude: number } }[]>([]);
@@ -127,14 +131,15 @@ const Map = () => {
     <View style={styles.container}>
       {!loaded ? (
         <Text>Loading...</Text>
+      ) : mapError ? (
+        <MapFallback onLocationPress={handleGetCurrentLocation} />
       ) : (
-        <>
+        <MapErrorBoundary fallback={<MapFallback onLocationPress={handleGetCurrentLocation} />}>
           <MapView
             style={styles.map}
             region={region}
             showsUserLocation
             followsUserLocation
-
           >
             <Marker coordinate={currentPosition} />
             {hotspots.map((hotspot) => (
@@ -188,46 +193,47 @@ const Map = () => {
             
             <IconSymbol name="plus" size={36} color="black" />
           </TouchableOpacity>
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => setModalVisible(false)}
-          >
-            <View style={styles.modalContainer}>
-              <View style={styles.modalContent}>
-                <Text>Add a new scavenge</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Name"
-                  value={name}
-                  onChangeText={setName}
-                />
-                <TextInput
-                  style={styles.input}
-                  placeholder="Image URL"
-                  value={image}
-                  onChangeText={setImage}
-                />
-                <TextInput
-                  style={styles.input}
-                  placeholder="Description"
-                  value={description}
-                  onChangeText={setDescription}
-                />
-                <Button title="Get Current Location" onPress={handleGetCurrentLocation} />
-                <Button title="Submit" onPress={AppendNewLocationToDatabase} />
-                <TouchableOpacity
-                  style={styles.closeButton}
-                  onPress={() => setModalVisible(false)}
-                >
-                  <Text style={styles.closeButtonText}>Close</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </Modal>
-        </>
+        </MapErrorBoundary>
       )}
+      
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text>Add a new scavenge</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Name"
+              value={name}
+              onChangeText={setName}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Image URL"
+              value={image}
+              onChangeText={setImage}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Description"
+              value={description}
+              onChangeText={setDescription}
+            />
+            <Button title="Get Current Location" onPress={handleGetCurrentLocation} />
+            <Button title="Submit" onPress={AppendNewLocationToDatabase} />
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => setModalVisible(false)}
+            >
+              <Text style={styles.closeButtonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };

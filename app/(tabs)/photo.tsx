@@ -227,9 +227,6 @@ const styles = StyleSheet.create({
     },
     predictionsContainer: {
         padding: 20,
-       
-        //alignItems: 'center',
-        //justifyContent: 'center',
         backgroundColor: '#E3B57A',
         borderRadius: 10,
         margin: 20,
