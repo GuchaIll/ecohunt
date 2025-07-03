@@ -6,6 +6,8 @@ A gamified recycling and item trading React Native application developed during 
 
 EcoHunt transforms recycling and item trading into an engaging, scavenger hunt experience. The app encourages environmental consciousness by rewarding users with tokens for recycling activities and item exchanges, which can be used to grow a virtual garden.
 
+https://docs.google.com/presentation/d/10upQCdjogKIZRXSPN2lXlY-pXm1uZxjHFSMKZXINjrQ/edit?usp=sharing
+
 ## ✨ Features
 
 ### Current Features
